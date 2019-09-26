@@ -547,6 +547,15 @@ export default class FormElement extends FormGroup {
   errors = null;
 
   /**
+   * The array of errores returned from the JSON:API validation.
+   *
+   * @property modelErrors
+   * @type array
+   * @protected
+   */
+  modelErrors = null;
+
+  /**
    * @property hasErrors
    * @type boolean
    * @readonly
@@ -648,7 +657,7 @@ export default class FormElement extends FormGroup {
       return A([this.get('customError')]);
     }
     if (this.get('hasErrors') && this.get('showModelValidation')) {
-      return A(this.get('errors'));
+      return A(this.get('errors')).pushObjects(this.get('modelErrors'));
     }
     if (this.get('hasCustomWarning')) {
       return A([this.get('customWarning')]);
@@ -657,6 +666,11 @@ export default class FormElement extends FormGroup {
       return A(this.get('warnings'));
     }
     return null;
+  }
+
+  @computed('modelErrors.[]')
+  get validationModelErrors() {
+    return A(this.get('modelErrors'));
   }
 
   /**

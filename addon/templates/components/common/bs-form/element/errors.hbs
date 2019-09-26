@@ -1,11 +1,17 @@
 {{#if this.show}}
+  <strong>show</strong>
   {{#if this.showMultipleErrors}}
+    <strong>multiple</strong>
     <div class="pre-scrollable">
       {{#each @messages as |message|}}
         <div class={{feedbackClass}}>{{message}}</div>
       {{/each}}
     </div>
   {{else}}
+    <strong>onlyFirst</strong>
     <div class={{this.feedbackClass}}>{{@messages.firstObject}}</div>
   {{/if}}
 {{/if}}
+{{#each @modelMessages as |message|}}
+  <div class={{this.feedbackClass}}>{{message}}</div>
+{{/each}}
